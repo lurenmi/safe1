@@ -1,0 +1,13 @@
+(function(){
+  const center=[120.2397,30.2299];
+  const circle=(radius,level,color)=>{const pts=[];const n=96;const lat=center[1]*Math.PI/180;for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;pts.push([center[0]+radius*Math.cos(a)/(111320*Math.cos(lat)),center[1]+radius*Math.sin(a)/110540])}return {type:'Feature',properties:{kind:'zone',level,color,name:`${level}级防护区`},geometry:{type:'Polygon',coordinates:[pts]}}};
+  const point=(lng,lat,name,kind,status='在线',color='#27b879',extra={})=>({type:'Feature',properties:{kind,name,status,color,...extra},geometry:{type:'Point',coordinates:[lng,lat]}});
+  const line=(coordinates,name,color='#7258ed',kind='route')=>({type:'Feature',properties:{kind,name,color},geometry:{type:'LineString',coordinates}});
+  const zones={type:'FeatureCollection',features:[circle(3000,2,'#6576f5'),circle(1000,1,'#f05252')]};
+  const devices={type:'FeatureCollection',features:[point(120.221,30.251,'雷达A01','雷达','在线','#2779ed'),point(120.254,30.245,'雷达A02','雷达','在线','#2779ed'),point(120.268,30.224,'雷达A03','雷达','在线','#2779ed'),point(120.215,30.226,'光电E01','光电','在线','#694ee8'),point(120.246,30.257,'光电E02','光电','在线','#694ee8'),point(120.270,30.239,'光电E03','光电','在线','#694ee8'),point(120.230,30.216,'无线电D01','无线电','在线','#20ae77'),point(120.258,30.215,'无线电D02','无线电','在线','#20ae77')]};
+  const vehicles={type:'FeatureCollection',features:[point(120.216,30.247,'浙A·警巡001','车辆','巡逻中','#6046e9'),point(120.263,30.244,'浙A·警巡002','车辆','巡逻中','#6046e9'),point(120.219,30.224,'浙A·警巡003','车辆','巡逻中','#6046e9'),point(120.252,30.214,'浙A·警巡005','车辆','待命','#20b36b')]};
+  const targets={type:'FeatureCollection',features:[point(120.266,30.252,'目标 UAS-20261018-017','异常目标','未处置','#ef4d4d',{altitude:'126m',speed:'14m/s'}),point(120.208,30.244,'公安航拍机 WL-PSB-03','白名单目标','任务飞行','#22b36d'),point(120.259,30.220,'媒体航拍机 WL-TV-02','白名单目标','许可飞行','#22b36d'),point(120.224,30.213,'目标 UAS-20261018-021','待识别目标','持续跟踪','#f3ad17',{altitude:'82m',speed:'9m/s'})]};
+  const alerts={type:'FeatureCollection',features:[point(120.252,30.232,'高危｜未授权目标进入核心禁飞区','告警','待处置','#ef4d4d'),point(120.206,30.219,'高危｜目标持续逼近主会场','告警','已处置','#ef4d4d'),point(120.267,30.258,'中危｜东南方向无线电频谱异常','告警','研判中','#fa941d'),point(120.218,30.263,'低危｜外围预警区发现低慢小目标','告警','待确认','#f4b000')]};
+  const routes={type:'FeatureCollection',features:[line([[120.216,30.247],[120.224,30.255],[120.241,30.259],[120.263,30.244]],'北线巡逻'),line([[120.219,30.224],[120.231,30.213],[120.252,30.214],[120.263,30.226]],'南线巡逻','#3f86f4'),line([[120.208,30.244],[120.221,30.239],[120.238,30.2368],[120.266,30.252]],'目标轨迹','#25c17b','track')]};
+  window.LowAltitudeGeoJSON={center,zones,devices,vehicles,targets,alerts,routes};
+})();
