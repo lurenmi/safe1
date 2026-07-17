@@ -1,0 +1,20 @@
+/* Final positioning guard for the in-map device dock. */
+.l2.assessment-device-in-map .assessment-device-dock{
+  top:14px!important;
+  bottom:246px!important;
+  max-height:calc(100% - 260px)!important;
+}
+.l2.assessment-device-in-map .assessment-device-dock.collapsed{
+  top:14px!important;
+  bottom:auto!important;
+  height:46px!important;
+  max-height:none!important;
+}
+@media(max-width:1450px){
+  .l2.assessment-device-in-map .assessment-device-dock{
+    top:12px!important;
+    bottom:222px!important;
+    max-height:calc(100% - 234px)!important;
+  }
+  .l2.assessment-device-in-map .assessment-device-dock.collapsed{top:12px!important;bottom:auto!important}
+}

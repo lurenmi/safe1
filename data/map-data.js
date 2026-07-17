@@ -1,5 +1,5 @@
 (function(){
-  const center=[120.2397,30.2299];
+  const center=[120.224459,30.231610];
   const circle=(radius,level,color)=>{const pts=[];const n=96;const lat=center[1]*Math.PI/180;for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;pts.push([center[0]+radius*Math.cos(a)/(111320*Math.cos(lat)),center[1]+radius*Math.sin(a)/110540])}return {type:'Feature',properties:{kind:'zone',level,color,name:`${level}级防护区`},geometry:{type:'Polygon',coordinates:[pts]}}};
   const point=(lng,lat,name,kind,status='在线',color='#27b879',extra={})=>({type:'Feature',properties:{kind,name,status,color,...extra},geometry:{type:'Point',coordinates:[lng,lat]}});
   const line=(coordinates,name,color='#7258ed',kind='route')=>({type:'Feature',properties:{kind,name,color},geometry:{type:'LineString',coordinates}});
