@@ -490,6 +490,9 @@ function moveCoverageDeviceListIntoMap(){
     list.innerHTML=devices.map((device,index)=>{const p=device.properties||{},name=p.name||`反制设备${index+1}`,type=p.type||'定向反制设备',online=p.status==='在线';return `<div class="list-item coverage-device-item" data-counter-device="${index}"><div class="row"><strong>${name}</strong><span class="status ${online?'ok':'danger'}">${online?'在线':'离线'}</span></div><small class="device-kind"><i class="ti ti-shield-radar" aria-hidden="true"></i>${type}</small><span class="muted">作用半径 ${p.radius||1800}m｜有效角 ${p.angle||360}°</span><button class="device-edit-btn" type="button">查看详情</button></div>`}).join('');
     list.querySelectorAll('[data-counter-device]').forEach(item=>item.onclick=()=>openDeviceParameterEditor(devices[+item.dataset.counterDevice]));
   });
+  // Keep the map clear on first entry.  The compact trigger remains available
+  // at the upper-left corner and expands the same list in place.
+  setCollapsed(true);
 }
 
 function mapFeaturesForPage(){
@@ -515,7 +518,7 @@ document.addEventListener('click',event=>{
     metrics.appendChild(card);
   },0);
 });
-function render(){if(current===3)current=7;if(current===5)current=4;if(ui.timer)clearInterval(ui.timer);if(activeMap){activeMap.remove();activeMap=null}mapImagery=false;document.body.classList.toggle('monitor-mode',current===4);document.body.classList.toggle('leader-mode',current===6);document.body.classList.toggle('utility-mode',current>=7&&current!==9);document.body.classList.toggle('mobile-patrol-mode',current===9);shellV2();q('#workspace').innerHTML=[page1,page2,page3,page4,page5,page6,pageLeadership,pageDeviceManagement,pageAnalytics,pageMobilePatrol][current]();bindInteractions()}window.addEventListener('hashchange',()=>{let n=+(location.hash.slice(1)||1)-1;if(n===3)n=7;if(n===5)n=4;if(n!==current){current=n;render()}});render();
+function render(){if(current===3)current=7;if(current===5)current=4;if(ui.timer)clearInterval(ui.timer);if(activeMap){activeMap.remove();activeMap=null}mapImagery=false;document.body.classList.toggle('monitor-mode',current===4);document.body.classList.toggle('leader-mode',current===6);document.body.classList.toggle('utility-mode',current>=7&&current!==9);document.body.classList.toggle('mobile-patrol-mode',current===9);shellV2();q('#workspace').innerHTML=[page1,page2,page3,page4,page5,page6,pageLeadership,pageDeviceManagement,pageAnalytics,pageMobilePatrol][current]();q('main')?.scrollTo(0,0);bindInteractions()}window.addEventListener('hashchange',()=>{let n=+(location.hash.slice(1)||1)-1;if(n===3)n=7;if(n===5)n=4;if(n!==current){current=n;render()}});render();
 
 /* Detailed target intelligence and compact mobility decision panel. */
 function monitoringDroneProfile(feature,index,authorized=false){const models=authorized?['DJI Matrice 350 RTK','DJI Mavic 3E','Autel EVO Max 4T']:['DJI Air 3','DJI Mavic 3 Pro','型号待识别'],types=['四旋翼无人机','多旋翼无人机','行业级无人机'];return{started:feature.properties.startTime||`14:${String(18-index%7).padStart(2,'0')}:${String(26+index*3).slice(-2)}`,type:feature.properties.droneType||types[index%types.length],model:feature.properties.model||models[index%models.length],identity:feature.properties.identity||feature.properties.remoteId||(authorized?`RID-ZJ-${String(26011801+index)}`:'未识别'),method:feature.properties.identifyMethod||(authorized?'Remote ID + 光电识别':'雷达 / 频谱融合识别')}}

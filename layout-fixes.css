@@ -18,3 +18,72 @@
   }
   .l2.assessment-device-in-map .assessment-device-dock.collapsed{top:12px!important;bottom:auto!important}
 }
+
+/* 110% visual-density baseline ------------------------------------------------
+   This mirrors the requested 110% browser-zoom reading density without using
+   CSS zoom (which would clip fixed map workspaces and panels). */
+@media (min-width:1601px){
+  :root{--side:255px}
+  html,body{font-size:15.4px}
+  .topbar{height:75px;padding:0 28px}
+  .brand{font-size:27px}
+  .brand-sub{font-size:10px;letter-spacing:1.6px}
+  .sidebar{top:75px;padding:26px 13px 20px}
+  main{top:75px;padding:0 20px 20px}
+  .steps{height:79px}
+  #workspace{height:calc(100% - 79px)}
+  .navitem{height:65px;padding:0 22px;font-size:18px}
+  .navitem i{font-size:21px}
+  .panel-title{height:53px;font-size:17px}
+  .metric{padding:17px}
+  .metric strong{font-size:31px}
+  .primary,.ghost{min-height:40px;padding:8px 16px}
+  .map-tools button{width:46px;height:46px}
+  .legend{padding:13px}
+}
+
+@media (min-width:1200px) and (max-width:1600px){
+  :root{--side:209px}
+  html,body{font-size:14.3px}
+  .topbar{height:66px;padding:0 22px}
+  .brand{font-size:23px}
+  .brand-sub{font-size:9px;letter-spacing:1.35px}
+  .sidebar{top:66px;padding:20px 10px 16px}
+  main{top:66px;padding:0 14px 14px}
+  .steps{height:70px}
+  #workspace{height:calc(100% - 70px)}
+  .navitem{height:56px;padding:0 16px;font-size:15px}
+  .navitem i{font-size:18px}
+  .panel-title{height:47px;font-size:15px}
+  .metric{padding:13px}
+  .metric strong{font-size:26px}
+  .primary,.ghost{min-height:36px;padding:7px 13px}
+}
+
+/* The dock has a stable map-relative anchor at every desktop density. */
+@media (min-width:1200px){
+  .l2.assessment-device-in-map .assessment-device-dock{
+    left:14px!important;
+    top:14px!important;
+  }
+  .l2.assessment-device-in-map .assessment-device-dock.collapsed{
+    left:14px!important;
+    top:14px!important;
+  }
+}
+
+/* Shell alignment guard: the top bar is floating, so all page content starts
+   after its bottom edge on every desktop density / display scaling setting. */
+@media (min-width:800px){
+  :root{--shell-content-top:96px}
+  .topbar{top:12px!important;height:72px!important}
+  .sidebar{top:var(--shell-content-top)!important;bottom:16px!important}
+  main{top:var(--shell-content-top)!important;bottom:16px!important}
+
+  /* Expanded first-level navigation is intentionally one line per action. */
+  body:not(.sidebar-mini) .sidebar{width:220px!important}
+  body:not(.sidebar-mini) main{left:252px!important}
+  .sidebar .navitem{white-space:nowrap!important;flex-wrap:nowrap!important;min-width:0!important}
+  .sidebar .nav-label{display:block!important;min-width:0!important;white-space:nowrap!important;word-break:keep-all!important;overflow:hidden!important;text-overflow:ellipsis!important;line-height:1.25!important}
+  .sidebar .navitem .ico{flex:0 0 23px!important}
+}
